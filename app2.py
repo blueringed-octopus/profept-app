@@ -17,15 +17,14 @@ df = pd.read_csv(f"https://docs.google.com/spreadsheets/d/{sheet_id}/export?form
 # Filter the data
 df_filtered = df.iloc[:, 3:]
 
+df_assunto = pd.DataFrame({
+    "Assunto": ["Gênero e Sexualidade", "Racismo", "Legislação"]
+})
 
 # Create a sidebar
 curso = st.sidebar.selectbox("Selecione o curso", df_filtered["Curso"].unique())
 df_sidebar1 = df_filtered[df_filtered["Curso"] == curso]
 df_sidebar1
-
-df_assunto = pd.DataFrame({
-    "Assunto": ["Gênero e Sexualidade", "Racismo", "Legislação"]
-})
 
 assunto = st.sidebar.selectbox("Selecione o assunto", df_assunto["Assunto"].unique())
 df_sidebar2 = df_assunto[df_assunto["Assunto"] == assunto]
