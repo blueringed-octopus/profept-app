@@ -1,7 +1,6 @@
 import streamlit as st
 import pandas as pd
 import plotly.express as px
-#import matplotlib.pyplot as plt
 
 # Set the page layout configuration
 st.set_page_config(layout="wide")
@@ -11,11 +10,22 @@ st.title('Dashboard sobre Diversidade Etnico-Racial, Gênero e Sexualidade')
 
 # File read from Google Drive and transformed to a CSV file
 # url = https://docs.google.com/spreadsheets/d/1MXaa_d0oZv_NN1iWb0U9WugLGVtepHOrjU1_A2iUjas/edit?usp=drive_link
+
+@st.cache_data # Add cache_data decorator to avoid loading the data every time the page is refreshed
+def load_data(url):
+    df = pd.read_csv(url)
+    return df
+
 sheet_id = "1MXaa_d0oZv_NN1iWb0U9WugLGVtepHOrjU1_A2iUjas"
-df = pd.read_csv(f"https://docs.google.com/spreadsheets/d/{sheet_id}/export?format=csv")
+df = load_data(f"https://docs.google.com/spreadsheets/d/{sheet_id}/export?format=csv")
+
+@st.cache_data
+def transform(df):
+    df = df.iloc[:, 3:]
+    return df
 
 # Filtering data
-df_filtered = df.iloc[:, 3:]
+df_filtered = transform(df)
 
 df_subject = pd.DataFrame({
     "Assunto": ["Gênero e Sexualidade", "Racismo", "Legislação"]
@@ -39,9 +49,8 @@ df_sidebar2 = df_subject[df_subject["Assunto"] == subject]
 # Displaying general answers frequency to the questions
 st.write("## Frequência geral das respostas por pergunta")
 df_questions = df_sidebar1.iloc[:, 1:]
-freq_questions = df_questions.apply(pd.Series.value_counts)
+freq_questions = df_questions.apply(pd.Series.value_counts).fillna(0)
 st.write(freq_questions)
-
 
 # Configuring the layout
 if subject == "Gênero e Sexualidade":
