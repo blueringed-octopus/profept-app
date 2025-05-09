@@ -109,23 +109,31 @@ df_courses_rnm = df_without_year.iloc[:, 1:]
 df_courses_rnm.columns = range(1, len(df_courses.columns) + 1)
 
 # Calculating the frequency of answers by course
-freq_courses = df_courses.apply(pd.Series.value_counts).fillna(0).T.rename(columns={0: "Cursos"})
+freq_courses = df_courses.apply(pd.Series.value_counts).fillna(0).T.rename(columns={0: "Questões"})
 
 st.write(freq_courses)
 
-freq_courses_rnm = df_courses_rnm.apply(pd.Series.value_counts).fillna(0).T.rename(columns={0: "Cursos"})
+
+freq_courses_rnm = df_courses_rnm.apply(pd.Series.value_counts).fillna(0).T.rename(columns={0: "Questões"})
+
+#st.write(freq_courses_rnm)
+
 
 # Filtering the columns, transforming them into rows and renaming the new column to "Respostas"
 freq_courses_melted = freq_courses_rnm.reset_index().melt(id_vars=["index"], var_name="Respostas", value_name="Frequência")
-freq_courses_melted = freq_courses_melted.rename(columns={"index": "Cursos"})
+freq_courses_melted = freq_courses_melted.rename(columns={"index": "Questões"})
 
-# Mapping the values of 'Cursos' to numbers from 1 to 30
-cursos_mapping = {curso: i+1 for i, curso in enumerate(freq_courses_melted['Cursos'].unique())}
-freq_courses_melted['Cursos_Num'] = freq_courses_melted['Cursos'].map(cursos_mapping)
+#freq_courses_melted = freq_courses.reset_index().melt(id_vars=["index"], var_name="Respostas", value_name="Frequência")
+#freq_courses_melted = freq_courses.rename(columns={"index": "Cursos"})
+
+# Mapping the values of 'Questões' to numbers from 1 to 30
+cursos_mapping = {curso: i+1 for i, curso in enumerate(freq_courses_melted['Questões'].unique())}
+freq_courses_melted['Questões_Num'] = freq_courses_melted['Questões'].map(cursos_mapping)
 
 # Creating the bar chart
-fig_courses = px.bar(freq_courses_melted, x='Cursos', y='Frequência', color='Respostas', title="Frequência das Respostas por Curso", width=1000, height=600)
+fig_courses = px.bar(freq_courses_melted, x='Questões', y='Frequência', color='Respostas', title="Frequência das Respostas por Curso", width=1000, height=600)
 fig_courses.update_xaxes(tickvals=list(range(0, 31)))
+
 st.plotly_chart(fig_courses)
 
 # Showing the answers frequency to the questions by year
@@ -143,22 +151,22 @@ df_years_rnm = df_without_course.iloc[:, 1:]
 df_years_rnm.columns = range(1, len(df_years.columns) + 1)
 
 # Calculating the frequency of answers by year
-freq_years = df_years.apply(pd.Series.value_counts).fillna(0).T.rename(columns={0: "Anos"})
+freq_years = df_years.apply(pd.Series.value_counts).fillna(0).T.rename(columns={0: "Questões"})
 
 st.write(freq_years)
 
-freq_years_rnm = df_years_rnm.apply(pd.Series.value_counts).fillna(0).T.rename(columns={0: "Anos"})
+freq_years_rnm = df_years_rnm.apply(pd.Series.value_counts).fillna(0).T.rename(columns={0: "Questões"})
 
 # Filtering the columns, transforming them into rows and renaming the new column to "Respostas"
 freq_years_melted = freq_years_rnm.reset_index().melt(id_vars=["index"], var_name="Respostas", value_name="Frequência")
-freq_years_melted = freq_years_melted.rename(columns={"index": "Anos"})
+freq_years_melted = freq_years_melted.rename(columns={"index": "Questões"})
 
-# Mapping the values of 'Anos' to numbers from 1 to 30
-anos_mapping = {ano: i+1 for i, ano in enumerate(freq_years_melted['Anos'].unique())}
-freq_years_melted['Anos_Num'] = freq_years_melted['Anos'].map(anos_mapping)
+# Mapping the values of 'Questões' to numbers from 1 to 30
+anos_mapping = {ano: i+1 for i, ano in enumerate(freq_years_melted['Questões'].unique())}
+freq_years_melted['Questões_Num'] = freq_years_melted['Questões'].map(anos_mapping)
 
 # Creating the bar chart
-fig_years = px.bar(freq_years_melted, x='Anos', y='Frequência', color='Respostas', title="Frequência das Respostas por Ano", width=1000, height=600)
+fig_years = px.bar(freq_years_melted, x='Questões', y='Frequência', color='Respostas', title="Frequência das Respostas por Ano", width=1000, height=600)
 fig_years.update_xaxes(tickvals=list(range(0, 31)))
 st.plotly_chart(fig_years)
 
