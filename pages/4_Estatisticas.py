@@ -58,7 +58,6 @@ df_stats_tests = pd.DataFrame({
 
 st.write("## Análises Estatísticas dos Resultados") 
 
-st.write("### Estatísticas Descritivas")
 stats_choice = st.sidebar.selectbox("Selecione o tipo de Análise Estatística", df_stats_tests["Estatísticas"].unique())
 stats_sidebar = df_stats_tests[df_stats_tests["Estatísticas"] == stats_choice]
 
@@ -433,6 +432,7 @@ elif stats_choice == "Testes Estatísticos - Curso e Ano":
 else: 
     # Calcula o índice de conhecimento para cada grupo 
     st.write("## Testes Estatísticos para os Índices de Conhecimento")
+    st.write("Esta seção apresenta os testes estatísticos realizados para verificar diferenças significativas nos índices de conhecimento entre os cursos.")
     cursos_disponiveis = q_df_filtered['Curso'].unique()
     if len(cursos_disponiveis) >= 2:
         curso1, curso2 = cursos_disponiveis[:2]
