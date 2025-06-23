@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import plotly.express as px
+from indices import calcular_indice_conhecimento
 
 def Anos():
     st.write("## Quadro de Respostas por Anos")
@@ -79,3 +80,9 @@ freq_years_melted['Questões_Num'] = freq_years_melted['Questões'].map(anos_map
 fig_years = px.bar(freq_years_melted, x='Questões', y='Frequência', color='Respostas', title="Frequência das Respostas por Ano", width=1000, height=600)
 fig_years.update_xaxes(tickvals=list(range(0, 31)))
 st.plotly_chart(fig_years)
+
+# Displaying the index of knowledge by course
+st.write("### Índice de Conhecimento por Ano")
+indice_conhecimento, resultado_final, fig = calcular_indice_conhecimento(freq_years)
+st.write(f"Índice de Conhecimento: {resultado_final:.2f}%")
+st.plotly_chart(fig)

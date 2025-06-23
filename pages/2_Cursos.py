@@ -1,6 +1,8 @@
 import streamlit as st
 import pandas as pd
 import plotly.express as px
+from indices import calcular_indice_conhecimento
+
 
 def Cursos():
     st.write("## Quadro de Respostas por Curso")
@@ -85,3 +87,8 @@ fig_courses.update_xaxes(tickvals=list(range(0, 31)))
 
 st.plotly_chart(fig_courses)
 
+# Displaying the index of knowledge by course
+st.write("### Índice de Conhecimento por Curso")
+percentuais_individuais, resultado_final, fig = calcular_indice_conhecimento(freq_courses)
+st.write(f"**Índice de Conhecimento Geral:** {resultado_final:.2f}%")
+st.plotly_chart(fig)

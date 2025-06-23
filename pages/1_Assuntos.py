@@ -1,6 +1,9 @@
 import streamlit as st
 import pandas as pd
 import plotly.express as px
+from indices import calcular_indice_genero_sexualidade
+from indices import calcular_indice_racismo
+from indices import calcular_indice_legislacao
 
 def Assuntos():
     st.write("## Quadro de Respostas por Assunto")
@@ -23,7 +26,7 @@ def transform(df):
 
 st.write("## Visão dos resultados por Assunto")
 st.write("Esta página apresenta uma visão dos resultados por Assunto, permitindo uma análise mais específica das percepções sobre diversidade étnico-racial, gênero e sexualidade.")
-st.write("Aqui, você pode explorar as respostas dos(as) estudantes agrupadas por assunto, filtrando por curso e assunto específico. Isso permite uma visão mais aprofundada sobre os temas abordados no questionário.")
+st.write("Aqui, você pode explorar as respostas dos(as) estudantes agrupadas por assunto, filtrando por curso, ano e assunto específico. Isso permite uma visão mais aprofundada sobre os temas abordados no questionário.")
 st.write("Estão apresentados um quadro com a frequência das respostas por pergunta e gráficos de pizza que mostram a frequência das respostas para cada pergunta, permitindo uma análise visual mais detalhada dos dados coletados.")
 
 # Filtering data
@@ -47,8 +50,13 @@ df_sidebar1 = df_filtered[
     (df_filtered["Em qual ano você está?"] == years)
 ]
 
+# Transposing the DataFrame to have questions as rows and answers as columns
 df_sidebar1_transposed = df_sidebar1.iloc[:, 2:]
+
+# Counting the frequency of answers for each question and filling NaN values with 0
 df_sidebar1_transposed = df_sidebar1_transposed.apply(pd.Series.value_counts).fillna(0).T.rename(columns={0: "Questões"})
+
+
 new_column_names = {old_name: f"Q{new_name}" for old_name, new_name in zip(df_sidebar1.columns[2:], range(1, len(df_sidebar1.columns)))}
 df_sidebar1 = df_sidebar1.rename(columns=new_column_names)
 
@@ -61,9 +69,23 @@ df_sidebar1 = df_sidebar1.iloc[:, 2:]  # Exclude the first two columns (Curso an
 
 st.write(df_sidebar1_transposed)
 
+# Transposing df_sidebar1 to calculate the frequency of answers
+freq_sidebar1 = df_sidebar1
+freq_sidebar1 = freq_sidebar1.apply(pd.Series.value_counts).fillna(0).T.rename(columns={0: "Questões"})
+
+# Calculating the indices based on the selected subject
+gs_percentuais, gs_resultado_final, gs_fig = calcular_indice_genero_sexualidade(freq_sidebar1)
+racismo_percentuais, racismo_resultado_final, racismo_fig = calcular_indice_racismo(freq_sidebar1)
+legislacao_percentuais, legislacao_resultado_final, legislacao_fig = calcular_indice_legislacao(freq_sidebar1)
+
+
+
 # Configuring the layout
 if subject == "Gênero e Sexualidade":
     st.write("### Gênero e Sexualidade")
+
+    # Table
+    st.write(f"### Índice de Conhecimento sobre Gênero e Sexualidade: {gs_resultado_final:.2f}%")
 
     # Selecting colunms Q1 to Q10
     
@@ -141,6 +163,8 @@ elif subject == "Racismo":
     st.write("### Racismo")
     
     # Table
+    st.write(f"### Índice de Conhecimento sobre Racismo: {racismo_resultado_final:.2f}%")
+
     # Selecting colunms Q11 to Q20
    
     col11, col12 = st.columns(2)
@@ -214,6 +238,9 @@ elif subject == "Racismo":
 
 else:
     st.write("### Legislação")
+
+    # Table
+    st.write(f"### Índice de Conhecimento sobre Legislação: {legislacao_resultado_final:.2f}%")
 
     # Selecting colunms Q21 to Q30
 
