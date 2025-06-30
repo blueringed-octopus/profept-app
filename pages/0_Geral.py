@@ -95,7 +95,7 @@ st.markdown(
     <h2>
         Índices de Nível de Conhecimento
         <sup>
-            <span title="Os índices de conhecimento são calculados pelo valor da frequência das respostas de 'Discordo totalmente' e 'Concordo totalmente', dividindo este valor pelo total de respostas de cada questão. O valor da razão de cada questão foi somado e calculada a porcentagem final, expressando o índice." style="cursor: help; font-size: 0.5em;">
+            <span title="Os índices de conhecimento são calculados pelo valor da frequência das respostas de 'Discordo totalmente' e 'Concordo totalmente' de cada questão, dividindo este valor pelo total de respostas que a questão recebeu, e o resultado desta razão é multiplicado por 100 para o calculo da porcentagem indivuidual de cada questão. O percentuais individuais são somados e o resultado é dividido pelo total de questões, expressando o índice de conhecimento." style="cursor: help; font-size: 0.5em;">
                 &#10067;
             </span>
         </sup>
