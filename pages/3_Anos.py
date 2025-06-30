@@ -85,4 +85,9 @@ st.plotly_chart(fig_years)
 st.write("### Índice de Conhecimento por Ano")
 indice_conhecimento, resultado_final, fig = calcular_indice_conhecimento(freq_years)
 st.write(f"Índice de Conhecimento: {resultado_final:.2f}%")
+if resultado_final < 75:
+    st.warning(f"#### O índice de conhecimento geral para o ano {year} é abaixo de 75%. Insatisfatório!")
+else:
+    st.success(f"#### O índice de conhecimento geral para o ano {year} é acima de 75%. Satisfatório!")
+
 st.plotly_chart(fig)

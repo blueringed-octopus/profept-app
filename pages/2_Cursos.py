@@ -90,5 +90,11 @@ st.plotly_chart(fig_courses)
 # Displaying the index of knowledge by course
 st.write("### Índice de Conhecimento por Curso")
 percentuais_individuais, resultado_final, fig = calcular_indice_conhecimento(freq_courses)
-st.write(f"**Índice de Conhecimento Geral:** {resultado_final:.2f}%")
+st.write(f"#### Índice de Conhecimento Geral {course}: {resultado_final:.2f}%")
+if resultado_final < 75:
+    st.warning(f"#### O índice de conhecimento geral para o curso {course} é abaixo de 75%. Insatisfatório!")    
+else:
+    st.success(f"#### O índice de conhecimento geral para o curso {course} é acima de 75%. Satisfatório!")
 st.plotly_chart(fig)
+
+

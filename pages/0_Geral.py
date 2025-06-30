@@ -90,8 +90,21 @@ fig_questions.update_xaxes(tickvals=list(range(0, 31)))
 st.plotly_chart(fig_questions)
 
 # Indexes of the Level of Knowledge
-st.write("### Índices de Nível de Conhecimento")
-st.write("Os índices foram calculados considerando que a resposta esperada para as questões 1, 2, 3, 4, 5, 6, 7, 11, 12, 13, 15, 16, 17, 18, 19, 22 e 23 é 'Discordo totalmente' e para as questões 8, 9, 10, 14, 20, 21, 24, 25, 26, 27, 28, 29 e 30 a resposta esperada é 'Concordo totalmente'.")
+st.markdown(
+    """
+    <h2>
+        Índices de Nível de Conhecimento
+        <sup>
+            <span title="Os índices de conhecimento são calculados pelo valor da frequência das respostas de 'Discordo totalmente' e 'Concordo totalmente', dividindo este valor pelo total de respostas de cada questão. O valor da razão de cada questão foi somado e calculada a porcentagem final, expressando o índice." style="cursor: help; font-size: 0.5em;">
+                &#10067;
+            </span>
+        </sup>
+    </h2>
+    """,
+    unsafe_allow_html=True
+)
+
+st.markdown("##### Os **índices** foram calculados considerando que a resposta esperada para as questões 1, 2, 3, 4, 5, 6, 7, 11, 12, 13, 15, 16, 17, 18, 19, 22 e 23 é **'Discordo totalmente'** e para as questões 8, 9, 10, 14, 20, 21, 24, 25, 26, 27, 28, 29 e 30 a resposta esperada é **'Concordo totalmente'**.")
 
 # Function to calculate the index of general knowledge
 @st.cache_data
@@ -327,20 +340,41 @@ def calcular_indice_legislacao(q_freq_questions):
         title="Percentual de Respostas por Questão - Legislação"
     )
     return l_resultado_final, fig_l
-
+st.write("### Resultado do Índices de Conhecimento Geral")
 resultado_final, fig = calcular_indice_conhecimento(q_freq_questions)
-st.plotly_chart(fig)
 st.write(f"**Índice de Conhecimento Geral: {resultado_final:.2f}%**")
+if resultado_final < 75:
+    st.warning("O índice de conhecimento geral é abaixo de 75%, indicando uma necessidade de maior conscientização e educação sobre diversidade étnico-racial, gênero e sexualidade.")  
+else:
+    st.success("O índice de conhecimento geral é acima de 75%, indicando um nível satisfatório de conscientização e educação sobre diversidade étnico-racial, gênero e sexualidade.")
+st.plotly_chart(fig)
 
+st.write("### Resultado do Índices de Conhecimento sobre Gênero e Sexualidade")
 gs_resultado_final, gs_fig = calcular_indice_genero_sexualidade(q_freq_questions)
-st.plotly_chart(gs_fig)
 st.write(f"**Índice de Conhecimento Geral sobre Gênero e Sexualidade: {gs_resultado_final:.2f}%**")
+if gs_resultado_final < 75:
+    st.warning("O índice de conhecimento sobre Gênero e Sexualidade é abaixo de 75%. Insatisfatório!")
+else:
+    st.success("O índice de conhecimento sobre Gênero e Sexualidade é acima de 75%. Satisfatório!")
+st.plotly_chart(gs_fig)
 
+
+st.write("### Resultado do Índices de Conhecimento sobre Racismo")
 r_resultado_final, r_fig = calcular_indice_racismo(q_freq_questions)
-st.plotly_chart(r_fig)
 st.write(f"**Índice de Conhecimento Geral sobre Racismo: {r_resultado_final:.2f}%**")
+if r_resultado_final < 75:
+    st.warning("O índice de conhecimento sobre Racismo é abaixo de 75%. Insatisfatório!")
+else:
+    st.success("O índice de conhecimento sobre Racismo é acima de 75%. Satisfatório!")
+st.plotly_chart(r_fig)
 
+
+st.write("### Resultado do Índices de Conhecimento sobre Legislação")
 l_resultado_final, l_fig = calcular_indice_legislacao(q_freq_questions)
-st.plotly_chart(l_fig)
 st.write(f"**Índice de Conhecimento Geral sobre Legislação: {l_resultado_final:.2f}%**")
+if l_resultado_final < 75:
+    st.warning("O índice de conhecimento sobre Legislação é abaixo de 75%. Insatisfatório!")
+else:
+    st.success("O índice de conhecimento sobre Legislação é acima de 75%. Satisfatório!")  
+st.plotly_chart(l_fig)
 

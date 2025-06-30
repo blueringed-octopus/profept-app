@@ -85,7 +85,11 @@ if subject == "Gênero e Sexualidade":
     st.write("### Gênero e Sexualidade")
 
     # Table
-    st.write(f"### Índice de Conhecimento sobre Gênero e Sexualidade: {gs_resultado_final:.2f}%")
+    st.write(f"#### Índice de Conhecimento sobre Gênero e Sexualidade: {gs_resultado_final:.2f}%")
+    if gs_resultado_final < 75:
+        st.warning(f"O índice de conhecimento sobre Gênero e Sexualidade para o curso {course} no ano {years} é abaixo de 75%. Insatisfatório!")
+    else:
+        st.success(f"O índice de conhecimento sobre Gênero e Sexualidade para o curso {years} no ano {years} é acima de 75%. Satisfatório!")
 
     # Selecting colunms Q1 to Q10
     
@@ -163,7 +167,11 @@ elif subject == "Racismo":
     st.write("### Racismo")
     
     # Table
-    st.write(f"### Índice de Conhecimento sobre Racismo: {racismo_resultado_final:.2f}%")
+    st.write(f"#### Índice de Conhecimento sobre Racismo: {racismo_resultado_final:.2f}%")
+    if racismo_resultado_final < 75:
+        st.warning(f"O índice de conhecimento sobre Racismo para o curso {course} no ano {years} é abaixo de 75%. Insatisfatório!")
+    else:
+        st.success(f"O índice de conhecimento sobre Racismo para o curso {course} no ano {years} é acima de 75%. Satisfatório!")
 
     # Selecting colunms Q11 to Q20
    
@@ -240,7 +248,11 @@ else:
     st.write("### Legislação")
 
     # Table
-    st.write(f"### Índice de Conhecimento sobre Legislação: {legislacao_resultado_final:.2f}%")
+    st.write(f"#### Índice de Conhecimento sobre Legislação: {legislacao_resultado_final:.2f}%")
+    if legislacao_resultado_final < 75:
+        st.warning(f"O índice de conhecimento sobre Legislação para o curso {course} no ano {years} é abaixo de 75%. Insatisfatório!")
+    else:
+        st.success(f"O índice de conhecimento sobre Legislação para o curso {course} no ano {years} é acima de 75%. Satisfatório!")
 
     # Selecting colunms Q21 to Q30
 
