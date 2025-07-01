@@ -29,7 +29,21 @@ st.write("Além disso, são apresentados os índices de conhecimento geral, bem 
 
 # Filtering data
 
-st.write("### Quadro Geral")
+st.markdown(
+            """
+                <h2>
+                    Quadro Geral
+                    <sup>
+                        <span title="Cique duas vezes sobre a questão para poder ler todo o texto." style="cursor: help; font-size: 0.5em;">
+                            &#10067;
+                        </span>
+                    </sup>
+                </h2>
+            """,
+            unsafe_allow_html=True
+)
+
+
 df_filtered = transform(df)
 
 df_questions = df_filtered.iloc[:, 2:]
